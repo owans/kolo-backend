@@ -1,0 +1,17 @@
+{
+  "name": "kolo-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/owans/kolo-backend.git",
+  "author": "Owanate Amachree <amachreeowanate@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.0.0",
+    "express": "^4.16.4",
+    "joi": "^14.3.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongodb": "^3.2.4",
+    "mongoose": "^5.5.7"
+  }
+}
