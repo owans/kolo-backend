@@ -32,19 +32,19 @@ router.post("/", JoiValidator(CreateUserValidator), async function(req, res) {
 
     res.json({
       status: "error",
-      message: " 😞 an error occured while creating your account"
+      message: " 😞 an error occurred while creating your account"
     });
   }
 });
 
 //Get User by ID
-router.get("/id", async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
     const authHeader = req.headers.authorization;
     if (!authHeader) {
       return res.status(401).json({
         status: "error",
-        message: "Please Specify Header"
+        message: "Please specify a header"
       });
     }
     const token = authHeader.split(" ")[1];
@@ -106,13 +106,12 @@ router.post("/login", async (req, res) => {
     console.log(err);
     res.json({
       status: "error",
-      message: "An error occured while creating a user"
+      message: "An error occurred while creating a user"
     });
   }
 });
 
 //Get all user details
-
 router.get("/", async function(req, res) {
   try {
     const user = await usermodel.find();

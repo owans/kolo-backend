@@ -7,10 +7,7 @@ const router = express.Router();
 const env = require("../../env");
 
 //create an account route
-router.post("/", JoiValidator(CreateAccountValidator), async function(
-  req,
-  res
-) {
+router.post("/", JoiValidator(CreateAccountValidator), async function(req, res) {
   try {
     const account = await accountmodel.create(req.body);
     const accountobj = account.toJSON();
