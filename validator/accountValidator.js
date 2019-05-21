@@ -11,7 +11,7 @@ exports.CreateAccountValidator = {
     .required(),
   bank_name: joi.string().required(),
   account_name: joi.string().required(),
-  email: joi.string().required(),
+  _id: joi.string().required(),
   balance: joi.number().default(null),
   success_alert: joi.bool().default(null),
   target_savings: joi.number().default(null),

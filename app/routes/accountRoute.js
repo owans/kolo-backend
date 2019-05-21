@@ -11,9 +11,9 @@ router.post("/", JoiValidator(CreateAccountValidator), async function(req, res) 
   try {
     const account = await accountmodel.create(req.body);
     const accountobj = account.toJSON();
-    const token = jwt.sign({ id: account.id }, env.JWT_SECRET, {
-      expiresIn: "1h"
-    });
+    // const token = jwt.sign({ id: account.id }, env.JWT_SECRET, {
+    //   expiresIn: "1h"
+    // });
 
     res.status(200).json({
       status: "success",
@@ -24,6 +24,32 @@ router.post("/", JoiValidator(CreateAccountValidator), async function(req, res) 
     res.json({
       status: "error",
       message: " 😞 an error occured while creating your account"
+    });
+  }
+});
+
+router.get("/id", async (req, res) => {
+  try {
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
+      return res.status(401).json({
+        status: "error",
+        message: "Please Specify Header"
+      });
+    }
+    const token = authHeader.split(" ")[1];
+    const tokendata = jwt.verify(token, env.JWT_SECRET);
+    const account_details = await accountmodel.findById(tokendata.id);
+
+    res.json({
+      status: "success",
+      data: account_details
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(401).json({
+      status: "error",
+      message: err.message
     });
   }
 });

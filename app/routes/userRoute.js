@@ -38,7 +38,7 @@ router.post("/", JoiValidator(CreateUserValidator), async function(req, res) {
 });
 
 //Get User by ID
-router.get("/:id", async (req, res) => {
+router.get("/id", async (req, res) => {
   try {
     const authHeader = req.headers.authorization;
     if (!authHeader) {
