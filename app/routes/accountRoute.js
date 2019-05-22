@@ -11,9 +11,6 @@ router.post("/", JoiValidator(CreateAccountValidator), async function(req, res) 
   try {
     const account = await accountmodel.create(req.body);
     const accountobj = account.toJSON();
-    // const token = jwt.sign({ id: account.id }, env.JWT_SECRET, {
-    //   expiresIn: "1h"
-    // });
 
     res.status(200).json({
       status: "success",

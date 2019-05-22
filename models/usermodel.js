@@ -30,6 +30,14 @@ const userSchema = new mongoose.Schema({
         required: true,
         select: false
       },
+      secret_token: { 
+        type: String
+      },
+    
+      is_active: {
+        type: Boolean
+      },
+    
       gender: {
         type: String,
         enum: ["Male", "Female", "Others"]

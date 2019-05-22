@@ -5,6 +5,8 @@ const JoiValidator = require("../middlewares/auth");
 const { CreateUserValidator } = require("../../validator/userValidator");
 const usermodel = require("../../models/usermodel");
 const accountmodel = require("../../models/accountModel");
+const passport = require('passport');
+const randomstring = require('randomstring');
 const router = express.Router();
 const env = require("../../env");
 
@@ -13,11 +15,18 @@ router.post("/", JoiValidator(CreateUserValidator), async function(req, res) {
   try {
     req.body.password = await bcrypt.hash(req.body.password, 10);
     req.body.confirmpassword = await bcrypt.hash(req.body.confirmpassword, 10);
-    const user = await usermodel.create(req.body);
 
-    const userobj = user.toJSON();
-    delete userobj.password;
-    delete userobj.confirmpassword;
+        //step1 activate user Generate secret token
+    const secretToken = randomstring.generate();
+
+    const user = await usermodel.create({
+        ...req.body,
+        secret_token: secretToken,
+        is_active: false});
+
+    const result = user.toJSON();
+    delete result.password;
+    delete result.confirmpassword;
 
     const token = jwt.sign({ id: user.id }, env.JWT_SECRET, {
       expiresIn: "1h"
@@ -25,7 +34,7 @@ router.post("/", JoiValidator(CreateUserValidator), async function(req, res) {
 
     res.status(200).json({
       status: "success",
-      data: { user: userobj, token }
+      data: { user: result, token }
     });
   } catch (err) {
     console.log(err);
