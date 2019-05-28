@@ -9,7 +9,6 @@ const UserRoute = require('./app/routes/userRoute');
 
 const AccountRoute = require('./app/routes/accountRoute');
 
-//connect to an express instance
 const app = express();
 
 //connect to mongodb instance
